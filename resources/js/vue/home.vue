@@ -42,6 +42,7 @@
       .todoListContainer{
         width: 350px;
         margin: auto;
+        margin-top: 30px;
       }
   
       .heading{

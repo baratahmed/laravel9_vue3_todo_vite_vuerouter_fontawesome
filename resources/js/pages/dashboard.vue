@@ -7,11 +7,13 @@
 
 <script>
 import {useRouter} from 'vue-router'
+import {useStore} from 'vuex'
 export default {
     setup(){
         const router = useRouter();
-        function logout(){
-            localStorage.removeItem('sanctum_token')
+        const store = useStore()
+        function logout(){     
+            store.dispatch('removeSanctumToken')       
             router.push({name:'Home'})
         }
         return {logout}

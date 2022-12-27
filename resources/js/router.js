@@ -3,6 +3,7 @@ import  Home  from "./vue/home.vue";
 import  Login  from "./pages/login.vue";
 import  Register  from "./pages/register.vue";
 import  Dashboard  from "./pages/dashboard.vue";
+import store from './store/index.js'
 
 const routes = [
     {
@@ -10,7 +11,7 @@ const routes = [
         name: 'Home',
         component: Home,
         meta:{
-            requiresAuth: true
+            requiresAuth: false
         }
     },
     {
@@ -45,10 +46,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to,from) => {
-    if(to.meta.requiresAuth && !localStorage.getItem('sanctum_token')){
+    if(to.meta.requiresAuth && store.getters.getSanctumToken == 0){
         return {name: 'Login'}
     }
-    if(!to.meta.requiresAuth && localStorage.getItem('sanctum_token')){
+    if(!to.meta.requiresAuth && store.getters.getSanctumToken != 0){
         return {name: 'Dashboard'}
     }
 })

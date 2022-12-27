@@ -23,9 +23,12 @@
 <script>
 import {reactive,ref}  from 'vue'
 import {useRouter} from 'vue-router'
+import {useStore} from 'vuex'
+
 export default {
       setup(){
         const router = useRouter()
+        const store = useStore()
         let form = reactive({
             email: '',
             password: ''
@@ -35,7 +38,7 @@ export default {
           await axios.post('/api/login',form)
           .then(res => {
               if (res.data.success) {
-                localStorage.setItem('sanctum_token',res.data.data.token)
+                store.dispatch('setSanctumToken',res.data.data.token)
                 router.push({name:'Dashboard'})
               } 
           })
