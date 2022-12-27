@@ -1,14 +1,14 @@
 <template>
-    <div class="todoListContainer">
-        <div class="heading">
-          <h2 id="title">Todo List</h2>
-          <add-item-form v-on:reloadList="getList()"/>
-        </div>
-        <list-view :items="items" v-on:reloadList="getList()"/>
-    </div>
-  </template>
+  <div class="todoListContainer">
+      <div class="heading">
+        <h2 id="title">Todo List</h2>
+        <add-item-form v-on:reloadList="getList()"/>
+      </div>
+      <list-view :items="items" v-on:reloadList="getList()"/>
+  </div>
+</template>
   
-  <script>
+<script>
   import AddItemForm from './addItemForm.vue'
   import ListView from './listView.vue'
   export default {
@@ -36,22 +36,22 @@
       this.getList()
     }
   }
-  </script>
+</script>
   
-  <style scoped>
-      .todoListContainer{
-        width: 350px;
-        margin: auto;
-        margin-top: 30px;
-      }
-  
-      .heading{
-        background: #e6e6e6;
-        padding: 10px;
-      }
-  
-      #title{
-        text-align: center;
-      }
-  
-  </style>
+<style scoped>
+  .todoListContainer{
+    width: 350px;
+    margin: auto;
+    margin-top: 30px;
+  }
+
+  .heading{
+    background: #e6e6e6;
+    padding: 10px;
+  }
+
+  #title{
+    text-align: center;
+  }
+
+</style>

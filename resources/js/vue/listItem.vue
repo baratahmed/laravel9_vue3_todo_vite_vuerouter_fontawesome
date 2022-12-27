@@ -3,7 +3,8 @@
       <input
         type="checkbox"
         @change="updateCheck()"
-        v-model="item"
+        v-model="item.completed"
+        :checked="item.completed_at==null ? false:true"
        />
        <span :class="[item.completed ? 'completed':'' , 'itemText']">{{ item.name }}</span>
        <button @click="removeItem()" class="trashcan"><font-awesome-icon icon="trash"/></button>
@@ -17,6 +18,8 @@ export default {
   props:["item"],
   methods:{
     updateCheck(){
+      // console.log('EEEEEEEEEEEE')
+      // console.log(this.item)
       axios.put('api/item/'+this.item.id,{item: this.item})
       .then(res => {
           if(res.status == 200){

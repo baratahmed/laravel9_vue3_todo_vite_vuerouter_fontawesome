@@ -41,10 +41,20 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $newItem = new Item;
-        $newItem->name = $request->item["name"];
-        $newItem->save();
-        return $newItem;
+        if(isset($request[0]["price"])){
+            foreach($request->all() as $item){
+                Item::create([
+                    'name' => $item["name"],
+                    'price' => $item["price"],
+                ]);
+            }
+        }else{
+            $newItem = new Item;
+            $newItem->name = $request->item["name"];
+            $newItem->save();
+            return $newItem;
+        }
+
     }
 
     /**
@@ -82,6 +92,12 @@ class ItemController extends Controller
         if($existingItem){
             $existingItem->completed = $request->item["completed"] ? true : false;
             $existingItem->completed_at = $request->item["completed"] ? Carbon::now() : null;
+            if(isset($request->item["name"])){
+                $existingItem->name = $request->item["name"];
+            }
+            if(isset($request->item["price"])){
+                $existingItem->price = $request->item["price"];
+            }
             $existingItem->save();
             return $existingItem;
         }

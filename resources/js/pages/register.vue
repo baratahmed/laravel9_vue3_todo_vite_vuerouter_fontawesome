@@ -34,10 +34,12 @@
 import {reactive,ref}  from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
+import {PiniaStore} from '../store/PiniaStore.js';
 export default {
       setup(){
         const router = useRouter()
         const store = useStore()
+        const pinia_store = PiniaStore()
         let form = reactive({
             name: '',
             email: '',
@@ -49,7 +51,8 @@ export default {
           await axios.post('/api/register',form)
           .then(res => {
               if (res.data.success) {
-                store.dispatch('setSanctumToken',res.data.data.token)
+                // store.dispatch('setSanctumToken',res.data.data.token)  // vuex
+                pinia_store.setSanctumToken(res.data.data.token)    // pinia
                 router.push({name:'Dashboard'})
               }
           })

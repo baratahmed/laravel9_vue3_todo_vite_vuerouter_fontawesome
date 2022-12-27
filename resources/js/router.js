@@ -3,16 +3,16 @@ import  Home  from "./vue/home.vue";
 import  Login  from "./pages/login.vue";
 import  Register  from "./pages/register.vue";
 import  Dashboard  from "./pages/dashboard.vue";
+import  DynamicForm  from "./pages/dynamic_form.vue";
 import store from './store/index.js'
+import {PiniaStore} from './store/PiniaStore.js'
+
 
 const routes = [
     {
         path: '/',
         name: 'Home',
         component: Home,
-        meta:{
-            requiresAuth: false
-        }
     },
     {
         path: '/login',
@@ -37,6 +37,14 @@ const routes = [
         meta:{
             requiresAuth: true
         }
+    },
+    {
+        path: '/dynamic_form',
+        name: 'DynamicForm',
+        component: DynamicForm,
+        meta:{
+            requiresAuth: true
+        }
     }
 ]
 
@@ -46,10 +54,25 @@ const router = createRouter({
 });
 
 router.beforeEach((to,from) => {
-    if(to.meta.requiresAuth && store.getters.getSanctumToken == 0){
+
+    // Vuex
+
+    // if(to.meta.requiresAuth && store.getters.getSanctumToken == 0){
+    //     return {name: 'Login'}
+    // }
+    // if(!to.meta.requiresAuth && store.getters.getSanctumToken != 0){
+    //     return {name: 'Dashboard'}
+    // }
+
+
+    // Pinia
+
+    const pinia_store = PiniaStore()
+
+    if(to.meta.requiresAuth && pinia_store.token == 0){
         return {name: 'Login'}
     }
-    if(!to.meta.requiresAuth && store.getters.getSanctumToken != 0){
+    if(to.meta.requiresAuth == false && pinia_store.token != 0){
         return {name: 'Dashboard'}
     }
 })
